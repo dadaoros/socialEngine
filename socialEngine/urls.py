@@ -5,8 +5,11 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'socialEngine.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-
+    #url(r'^$', 'socialEngine.views.home', name='home'),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^register/', 'socialApp.views.register'),
+    url(r'^login/', 'socialApp.views.login'),
+    url(r'^follows/', 'socialApp.views.follows'),
+
+
 )
