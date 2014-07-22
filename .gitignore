@@ -1,0 +1,5 @@
+### Django ###
+*.log
+*.pyc
+*.py~
+settings.py

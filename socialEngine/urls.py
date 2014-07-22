@@ -4,12 +4,14 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    #url(r'^$', 'socialEngine.views.home', name='home'),
+    # Admin:
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^register/', 'socialApp.views.register'),
-    url(r'^login/', 'socialApp.views.login'),
-    url(r'^follows/', 'socialApp.views.follows'),
-
-
+    # User:
+    url(r'^$', 'socialApp.views.home'),
+    url(r'^register/$', 'socialApp.views.register'),
+    url(r'^login/$', 'socialApp.views.log_in'),
+    url(r'^login/auth/$', 'socialApp.views.auth_view'),
+    url(r'^error_login/$', 'socialApp.views.error_login'),
+    url(r'^logout/$', 'socialApp.views.log_out'),
+    url(r'^follows/$', 'socialApp.views.follows'),
 )
