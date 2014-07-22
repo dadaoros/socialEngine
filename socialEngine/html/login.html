@@ -5,7 +5,7 @@
         <p class="error">Sorry. that is not a valid username or password</p>
     {% endif %}
 
-    <form action="auth/" method="post">
+    <form action="/login/auth/" method="post">
         {% csrf_token %}
         <label for="email">E-Mail:</label>
         <input type="text" name="email" value="" id="email" />

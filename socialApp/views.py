@@ -2,34 +2,38 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.shortcuts import render_to_response
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 
-
+@login_required(login_url='/login/')
 def home(request):
     return render_to_response('home.html')
     
 def register(request):
     return render_to_response('register.html')
 
-def login(request):
+def log_in(request):
     c = {}
     c.update(csrf(request))
     return render_to_response('login.html', c)
 
-def logout(request):
-    auth.logout(request)
-    return render_to_response('logout.html', c)
+def log_out(request):
+    logout(request)
+    return render_to_response('logout.html')
 
-def auth(request):
+def auth_view(request):
     email = request.POST.get('email', '')
     password = request.POST.get('password', '')
-    user = auth.authenticate(email=email,password=password)
-    
+    user = authenticate(username=email,password=password)
+    #return HttpResponse(user)
     if user is not None:
-        auth.login(request, user)
+        login(request, user)
         return render_to_response('home.html')
+        #return render('hay un usuario')
     else:
         return render_to_response('error_login.html')
+        #return render('no hay usuario')
         
 def error_login(request):
     return render_to_response('error_login.html')
