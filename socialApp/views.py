@@ -16,6 +16,10 @@ def login(request):
     c.update(csrf(request))
     return render_to_response('login.html', c)
 
+def logout(request):
+    auth.logout(request)
+    return render_to_response('logout.html', c)
+
 def auth(request):
     email = request.POST.get('email', '')
     password = request.POST.get('password', '')
@@ -27,7 +31,6 @@ def auth(request):
     else:
         return render_to_response('error_login.html')
         
-
 def error_login(request):
     return render_to_response('error_login.html')
     
