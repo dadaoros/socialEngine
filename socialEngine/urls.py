@@ -14,6 +14,4 @@ urlpatterns = patterns('',
     url(r'^error_login/$', 'socialApp.views.error_login'),
     url(r'^logout/$', 'socialApp.views.log_out'),
     url(r'^follows/$', 'socialApp.views.follows'),
-
-
 )
