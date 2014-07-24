@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class Profile(models.Model):
     email = models.EmailField()
@@ -12,10 +13,10 @@ class Profile(models.Model):
     def __unicode__(self):
         return self.email
         
-class Pub(models.Model)
+class Pub(models.Model):
     profile = models.ForeignKey(Profile)
     pub_text = models.CharField(max_length=350)
     pub_date = models.DateField()
     def __unicode__(self):
-        return self.email
+        return self.pub_text
 
