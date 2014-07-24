@@ -40,12 +40,18 @@ def follows(request):
     return render_to_response('follows.html')
 
 def register_user(request):
-    if request.method == POST:
+    print request
+    if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
+            form.save()
             return HttpResponseRedirect('/register_success')
     args = {}
     args.update(csrf(request))
     
     args['form'] = UserCreationForm()
     return render_to_response('register.html', args)
+
+def register_success(request):
+    return render_to_response('register_success.html')
+    

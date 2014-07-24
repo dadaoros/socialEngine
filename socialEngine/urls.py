@@ -7,7 +7,7 @@ urlpatterns = patterns('',
     # Admin:
     url(r'^admin/', include(admin.site.urls)),
     # User:
-    url(r'^$', 'socialApp.views.home'),    
+    url(r'^$', 'socialApp.views.home'),
     url(r'^login/$', 'socialApp.views.log_in'),
     url(r'^login/auth/$', 'socialApp.views.auth_view'),
     url(r'^error_login/$', 'socialApp.views.error_login'),
@@ -15,4 +15,5 @@ urlpatterns = patterns('',
     url(r'^follows/$', 'socialApp.views.follows'),
     url(r'^register/$', 'socialApp.views.register_user'),
     url(r'^register_success/$', 'socialApp.views.register_success'),
+
 )
