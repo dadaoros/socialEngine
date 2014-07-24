@@ -40,7 +40,6 @@ def follows(request):
     return render_to_response('follows.html')
 
 def register_user(request):
-    print request
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
