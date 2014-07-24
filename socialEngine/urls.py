@@ -15,5 +15,4 @@ urlpatterns = patterns('',
     url(r'^follows/$', 'socialApp.views.follows'),
     url(r'^register/$', 'socialApp.views.register_user'),
     url(r'^register_success/$', 'socialApp.views.register_success'),
-
 )
