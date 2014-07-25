@@ -10,7 +10,7 @@
         {% block sidebar %}
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/profile_list">Find People</a></li>
+            <li><a href="/profiles">Find People</a></li>
         </ul>
         {% endblock %}
     </div>
