@@ -1,4 +1,4 @@
 from django.contrib import admin
-from socialEngine.socialApp.models import Profile
+from socialApp.models import Profile, Pub
 
-admin.site.register(Profile)
+admin.site.register(Profile, Pub)

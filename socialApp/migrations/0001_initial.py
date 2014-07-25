@@ -38,6 +38,14 @@ class Migration(SchemaMigration):
         ))
         db.create_unique(m2m_table_name, ['from_profile_id', 'to_profile_id'])
 
+        # Adding model 'Pub'
+        db.create_table(u'socialApp_pub', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('profile', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['socialApp.Profile'])),
+            ('pub_text', self.gf('django.db.models.fields.CharField')(max_length=350)),
+        ))
+        db.send_create_signal(u'socialApp', ['Pub'])
+
 
     def backwards(self, orm):
         # Deleting model 'Profile'
@@ -48,6 +56,9 @@ class Migration(SchemaMigration):
 
         # Removing M2M table for field followings on 'Profile'
         db.delete_table(db.shorten_name(u'socialApp_profile_followings'))
+
+        # Deleting model 'Pub'
+        db.delete_table(u'socialApp_pub')
 
 
     models = {
@@ -62,6 +73,12 @@ class Migration(SchemaMigration):
             'lastName': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'password': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'sex': ('django.db.models.fields.CharField', [], {'max_length': '1'})
+        },
+        u'socialApp.pub': {
+            'Meta': {'object_name': 'Pub'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'profile': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['socialApp.Profile']"}),
+            'pub_text': ('django.db.models.fields.CharField', [], {'max_length': '350'})
         }
     }
 
