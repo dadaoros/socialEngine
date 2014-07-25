@@ -9,6 +9,7 @@ class Profile(models.Model):
     birth_date = models.DateField()
     sex = models.CharField(max_length=1)
     password = models.CharField(max_length=30)
+    user = models.OneToOneField(User)
     followers = models.ManyToManyField('self',related_name='Followers', blank=True, null=True, symmetrical=False)
     followings=models.ManyToManyField('self',related_name='Followings', blank=True, null=True, symmetrical=False)
     def __unicode__(self):

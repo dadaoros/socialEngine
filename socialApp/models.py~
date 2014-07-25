@@ -17,7 +17,7 @@ class Profile(models.Model):
 class Pub(models.Model):
     profile = models.ForeignKey(Profile)
     pub_text = models.CharField(max_length=350)
-    pub_date = models.DateTimeField(auto_now=True, null=True)
+    pub_date = models.DateTimeField(auto_now=True)
     def __unicode__(self):
         return self.pub_text
 
