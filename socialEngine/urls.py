@@ -16,5 +16,6 @@ urlpatterns = patterns('',
     url(r'^register/$', 'socialApp.views.register_user'),
     url(r'^register_success/$', 'socialApp.views.register_success'),
     url(r'^profile/(\d{1,5})/$', 'socialApp.views.wall'),
+    url(r'^profiles/$', 'socialApp.views.show_profiles'),
 
 )

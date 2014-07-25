@@ -67,3 +67,8 @@ def wall(request,offset):
     template = loader.get_template("wall.html")
     context = Context({'wall_pubs':wall_pubs})
     return HttpResponse({template.render(context)})
+def show_profiles(request):
+    profile_list=Profile.objects.all()
+    template = loader.get_template("profile_list.html")
+    context = Context({'profile_list':profile_list})
+    return HttpResponse({template.render(context)})
