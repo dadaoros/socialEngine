@@ -8,7 +8,8 @@ from django.core.context_processors import csrf
 from django.contrib.auth.forms import UserCreationForm
 from socialEngine.forms import ProfileForm
 from django.contrib.auth.models import User
-
+from socialApp.models import Pub, Profile
+from django.template import loader, Context
 
 @login_required(login_url='/login/')
 def home(request):
@@ -42,22 +43,9 @@ def error_login(request):
 def follows(request):
     return render_to_response('follows.html')
 
-'''
-def register_user(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return render_to_response('register_success.html',form)
-    args = {}
-    args.update(csrf(request))
-    
-    args['form'] = UserCreationForm()
-    return render_to_response('register.html', args)
-'''
 def register_success(request):
     return render_to_response('register_success.html')
-    
+
 def register_user(request):
     if request.POST:
         form = ProfileForm(request.POST)
@@ -83,8 +71,18 @@ def register_user(request):
     
     return render_to_response('register.html',args)
             
-            
-            
-            
-            
-            
+def wall(request,offset):
+    try:
+        offset = int(offset)
+    except ValueError:
+        raise Http404()
+    p=Profile.objects.get(id=offset)
+    wall_pubs=p.pub_set.all()
+    template = loader.get_template("wall.html")
+    context = Context({'wall_pubs':wall_pubs})
+    return HttpResponse({template.render(context)})
+def show_profiles(request):
+    profile_list=Profile.objects.all()
+    template = loader.get_template("profile_list.html")
+    context = Context({'profile_list':profile_list})
+    return HttpResponse({template.render(context)})
