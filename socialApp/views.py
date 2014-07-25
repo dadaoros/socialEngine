@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 from django.contrib.auth.forms import UserCreationForm
+from socialEngine.forms import ProfileForm
+from django.contrib.auth.models import User
 from socialApp.models import Pub, Profile
 from django.template import loader, Context
 
@@ -41,22 +43,34 @@ def error_login(request):
 def follows(request):
     return render_to_response('follows.html')
 
-def register_user(request):
-    print request
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/register_success')
-    args = {}
-    args.update(csrf(request))
-    
-    args['form'] = UserCreationForm()
-    return render_to_response('register.html', args)
-
 def register_success(request):
     return render_to_response('register_success.html')
+
+def register_user(request):
+    if request.POST:
+        form = ProfileForm(request.POST)
+        if form.is_valid():
+            email = request.POST.get('email', '')
+            password1 = request.POST.get('password1', '')
+            password2 = request.POST.get('password1', '')
+            if password1 == password2:
+                new_user = User(username=email,email=email)
+                new_user.set_password(password1)
+                new_user.save()
+                new_form = form.save(commit=False)
+                new_form.user_id = new_user.id
+                new_form.save()
+                return HttpResponseRedirect('/register_success')
+            else:
+                return render_to_response('error_login.html')
+    else:
+        form = ProfileForm()
+    args = {}
+    args.update(csrf(request))
+    args['form'] = form
     
+    return render_to_response('register.html',args)
+            
 def wall(request,offset):
     try:
         offset = int(offset)

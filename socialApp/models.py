@@ -1,8 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import datetime
 
 class Profile(models.Model):
+    user = models.OneToOneField(User)
     email = models.EmailField()
     firstName = models.CharField(max_length=30)
     lastName = models.CharField(max_length=30)
@@ -14,11 +16,10 @@ class Profile(models.Model):
     followings=models.ManyToManyField('self',related_name='Followings', blank=True, null=True, symmetrical=False)
     def __unicode__(self):
         return self.email
-        
+ 
 class Pub(models.Model):
     profile = models.ForeignKey(Profile)
     pub_text = models.CharField(max_length=350)
     pub_date = models.DateTimeField(auto_now=True)
     def __unicode__(self):
         return self.pub_text
-
