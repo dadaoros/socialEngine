@@ -57,8 +57,12 @@ def register_user(request):
 def register_success(request):
     return render_to_response('register_success.html')
     
-def wall(request):
-    p=Profile.objects.get(id=1)
+def wall(request,offset):
+    try:
+        offset = int(offset)
+    except ValueError:
+        raise Http404()
+    p=Profile.objects.get(id=offset)
     wall_pubs=p.pub_set.all()
     template = loader.get_template("wall.html")
     context = Context({'wall_pubs':wall_pubs})
