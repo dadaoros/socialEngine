@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 from django.contrib.auth.forms import UserCreationForm
+from socialApp.models import Pub, Profile
+from django.template import loader, Context
 
 @login_required(login_url='/login/')
 def home(request):
@@ -55,3 +57,9 @@ def register_user(request):
 def register_success(request):
     return render_to_response('register_success.html')
     
+def wall(request):
+    p=Profile.objects.get(id=1)
+    wall_pubs=p.pub_set.all()
+    template = loader.get_template("wall.html")
+    context = Context({'wall_pubs':wall_pubs})
+    return HttpResponse({template.render(context)})
