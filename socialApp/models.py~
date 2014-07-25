@@ -15,9 +15,9 @@ class Profile(models.Model):
         return self.email
         
 class Pub(models.Model):
-    profile = models.ForeignKey(Profile,related_name='Profile')
+    profile = models.ForeignKey(Profile)
     pub_text = models.CharField(max_length=350)
-    pub_date = datetime.now()
+    pub_date = models.DateTimeField(auto_now=True, null=True)
     def __unicode__(self):
         return self.pub_text
 
