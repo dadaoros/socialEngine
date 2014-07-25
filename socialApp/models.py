@@ -13,4 +13,3 @@ class Profile(models.Model):
     followings=models.ManyToManyField('self',related_name='Followings', blank=True, null=True, symmetrical=False)
     def __unicode__(self):
         return self.email
-

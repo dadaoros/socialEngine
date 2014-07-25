@@ -1,19 +1,10 @@
 from django import forms
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from socialApp.models import Profile
 
-class RegistrationForm(UserCreationForm):
-    email = forms.EmailField(required=True)
-    
+class ProfileForm(forms.ModelForm):
+    password1 = forms.CharField(widget=forms.PasswordInput,label='Password')
+    password2 = forms.CharField(widget=forms.PasswordInput,label='Repeat password')
     class Meta:
-        model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        model = Profile
+        fields = ('email', 'firstName', 'lastName', 'birth_date', 'sex')
 
-    def save(self, commit=True):
-        user = super(UserCreationForm, self).save(commit=False)
-        user.email = self.cleaned_data['email']
-        
-        if commit:
-            user.save()
-
-        return user
