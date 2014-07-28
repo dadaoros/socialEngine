@@ -11,9 +11,6 @@ class Profile(models.Model):
     birth_date = models.DateField()
     sex = models.CharField(max_length=1)
     password = models.CharField(max_length=30)
-    user = models.OneToOneField(User)
-    followers = models.ManyToManyField('self',related_name='Followers', blank=True, null=True, symmetrical=False)
-    followings=models.ManyToManyField('self',related_name='Followings', blank=True, null=True, symmetrical=False)
     def __unicode__(self):
         return self.email
  
@@ -23,3 +20,7 @@ class Pub(models.Model):
     pub_date = models.DateTimeField(auto_now=True)
     def __unicode__(self):
         return self.pub_text
+
+class Follower(models.Model):
+    followed = models.ForeignKey(Profile, related_name='profile_followed')
+    followers = models.ForeignKey(Profile)
