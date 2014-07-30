@@ -3,5 +3,5 @@
 *.pyc
 *.py~
 *.txt~
-socialApp/migration
+socialApp/migration/
 settings.py
