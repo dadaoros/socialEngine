@@ -3,5 +3,6 @@
 *.pyc
 *.py~
 *.txt~
-socialApp/migration/
+migrations/
+*.py.save
 settings.py
