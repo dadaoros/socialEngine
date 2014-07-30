@@ -2,5 +2,7 @@
 *.log
 *.pyc
 *.py~
+*.txt~
+socialApp/migration
 settings.py
 socialApp/migrations/*
