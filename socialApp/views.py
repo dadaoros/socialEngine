@@ -7,9 +7,11 @@ from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 from django.contrib.auth.forms import UserCreationForm
 from socialEngine.forms import ProfileForm
-from django.contrib.auth.models import User
 from socialApp.models import Pub, Profile
 from django.template import loader, Context
+from django.contrib.auth.models import Permission, User
+from django.shortcuts import get_object_or_404
+
 
 @login_required(login_url='/login/')
 def home(request):
@@ -73,6 +75,10 @@ def register_user(request):
 
 @login_required(login_url='/login/')
 def wall(request,offset):
+    print offset
+    if request.user.pk==offset:
+        print request.user.pk
+    
     try:
         offset = int(offset)
     except ValueError:
