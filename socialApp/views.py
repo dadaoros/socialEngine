@@ -117,6 +117,7 @@ def follow(request,offset):
     a_user=User.objects.get(id=request.user.pk)
     p=a_user.profile
     p2=Profile.objects.get(pk=offset)
+    #filtro=Follower.objects.filter((followed=p2)&&(followers=p))
     p.follower_set.create(followed=p2,followers=p)  
     return HttpResponseRedirect('/my_profile/followers_followings')
 
