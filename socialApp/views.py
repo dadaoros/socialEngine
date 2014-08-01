@@ -62,7 +62,7 @@ def register_user(request):
                                   birth_date=request.POST.get('birth_date', ''),
                                   sex=request.POST.get('sex', ''))
             new_profile.save()
-            return render_to_response('home.html', context_instance=RequestContext(request))
+            HttpResponseRedirect('/')
         else:
             return render_to_response('error_login.html', context_instance=RequestContext(request))
     else:
@@ -77,12 +77,13 @@ def register_user(request):
 
 @login_required(login_url='/login/')
 def my_profile(request):
-    p=Profile.objects.get(id=request.user.pk)
+    a_user=User.objects.get(id=request.user.pk)
+    p=a_user.profile
     wall_pubs=p.pub_set.all()
     template = loader.get_template("my_profile.html")
-    context = {"my_profile":{'profile': p ,'wall_pubs': wall_pubs}}
+    context = RequestContext(request,{"my_profile":{'profile': p ,'wall_pubs': wall_pubs}})
     context.update(csrf(request))
-    return render_to_response('my_profile.html',context)  
+    return render_to_response('my_profile.html',context) 
    
 @login_required(login_url='/login/')
 def wall(request,offset):
@@ -99,9 +100,10 @@ def wall(request,offset):
 def post_in_wall(request):
     if request.POST:
         new_pub_text=request.POST.get('pub_text','')
-        p=Profile.objects.get(id=request.user.pk)
+        a_user=User.objects.get(id=request.user.pk)
+        p=a_user.profile
         p.pub_set.create(pub_text=new_pub_text)
-    return HttpResponseRedirect('my_profile.html')
+    return HttpResponseRedirect('/my_profile/')
 
 @login_required(login_url='/login/')
 def show_profiles(request):
