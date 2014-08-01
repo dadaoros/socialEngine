@@ -9,11 +9,11 @@ from django.contrib.auth.forms import UserCreationForm
 from socialEngine.forms import ProfileForm
 from django.contrib.auth.models import User
 from socialApp.models import Pub, Profile
-from django.template import loader, Context
+from django.template import loader, Context, RequestContext
 
 @login_required(login_url='/login/')
 def home(request):
-    return render_to_response('home.html')
+    return render_to_response('home.html', context_instance=RequestContext(request))
 
 def log_in(request):
     c = {}
@@ -22,7 +22,7 @@ def log_in(request):
 
 def log_out(request):
     logout(request)
-    return render_to_response('logout.html')
+    return render_to_response('logout.html', context_instance=RequestContext(request))
 
 def auth_view(request):
     email = request.POST.get('email', '')
@@ -31,20 +31,20 @@ def auth_view(request):
     #return HttpResponse(user)
     if user is not None:
         login(request, user)
-        return render_to_response('home.html')
+        return render_to_response('home.html', context_instance=RequestContext(request))
         #return render('hay un usuario')
     else:
-        return render_to_response('error_login.html')
+        return render_to_response('error_login.html', context_instance=RequestContext(request))
         #return render('no hay usuario')
         
 def error_login(request):
-    return render_to_response('error_login.html')
+    return render_to_response('error_login.html', context_instance=RequestContext(request))
     
 def follows(request):
-    return render_to_response('follows.html')
+    return render_to_response('follows.html', context_instance=RequestContext(request))
 
 def register_success(request):
-    return render_to_response('register_success.html')
+    return render_to_response('register_success.html', context_instance=RequestContext(request))
 
 def register_user(request):
     if request.POST:
@@ -60,9 +60,9 @@ def register_user(request):
                 new_form = form.save(commit=False)
                 new_form.user_id = new_user.id
                 new_form.save()
-                return HttpResponseRedirect('/register_success')
+                return HttpResponseRedirect('/register_success', context_instance=RequestContext(request))
             else:
-                return render_to_response('error_login.html')
+                return render_to_response('error_login.html', context_instance=RequestContext(request))
     else:
         form = ProfileForm()
     args = {}
@@ -80,12 +80,12 @@ def wall(request,offset):
     p=Profile.objects.get(id=offset)
     wall_pubs=p.pub_set.all()
     template = loader.get_template("wall.html")
-    context = Context({'wall_pubs':wall_pubs})
+    context = RequestContext(request,{'wall_pubs':wall_pubs})
     return HttpResponse({template.render(context)})
 
 @login_required(login_url='/login/')
 def show_profiles(request):
     profile_list=Profile.objects.all()
     template = loader.get_template("profile_list.html")
-    context = Context({'profile_list':profile_list})
+    context = RequestContext(request,{'profile_list':profile_list})
     return HttpResponse({template.render(context)})
