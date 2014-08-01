@@ -89,7 +89,6 @@ def show_profiles(request):
     template = loader.get_template("profile_list.html")
     context = RequestContext(request,{'profile_list':profile_list})
     return HttpResponse({template.render(context)})
-
 def post_in_wall(request):
     if request.POST:
         form=PubForm(request.POST)
