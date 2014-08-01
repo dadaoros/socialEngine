@@ -10,6 +10,7 @@ from socialEngine.forms import ProfileForm, PubForm
 from django.contrib.auth.models import User
 from socialApp.models import Pub, Profile, Follower
 from django.template import loader, Context, RequestContext
+from django.db.models import Q
 
 @login_required(login_url='/login/')
 def home(request):
@@ -116,8 +117,9 @@ def follow(request,offset):
     a_user=User.objects.get(id=request.user.pk)
     p=a_user.profile
     p2=Profile.objects.get(pk=offset)
-    #filtro=Follower.objects.filter((followed=p2)&&(followers=p))
-    p.follower_set.create(followed=p2,followers=p)  
+    filtro=Follower.objects.filter(Q(followed=p2) & Q(followers=p))
+    if filtro is None:
+        p.follower_set.create(followed=p2,followers=p)  
     return HttpResponseRedirect('/my_profile/followers_followings')
 
 @login_required(login_url='/login/')
