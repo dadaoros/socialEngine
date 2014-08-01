@@ -48,21 +48,23 @@ def register_success(request):
 
 def register_user(request):
     if request.POST:
-        form = ProfileForm(request.POST)
-        if form.is_valid():
-            email = request.POST.get('email', '')
-            password1 = request.POST.get('password1', '')
-            password2 = request.POST.get('password1', '')
-            if password1 == password2:
-                new_user = User(username=email,email=email)
-                new_user.set_password(password1)
-                new_user.save()
-                new_form = form.save(commit=False)
-                new_form.user_id = new_user.id
-                new_form.save()
-                return HttpResponseRedirect('/register_success', context_instance=RequestContext(request))
-            else:
-                return render_to_response('error_login.html', context_instance=RequestContext(request))
+        email = request.POST.get('email', '')
+        password1 = request.POST.get('password1', '')
+        password2 = request.POST.get('password1', '')
+        if password1 == password2:
+            new_user = User(username=email,email=email)
+            new_user.set_password(password1)
+            new_user.save()
+            new_profile = Profile(user=new_user,
+                                  email=email,
+                                  firstName=request.POST.get('firstName', ''),
+                                  lastName=request.POST.get('lastName', ''),
+                                  birth_date=request.POST.get('birth_date', ''),
+                                  sex=request.POST.get('sex', ''))
+            new_profile.save()
+            return render_to_response('home.html', context_instance=RequestContext(request))
+        else:
+            return render_to_response('error_login.html', context_instance=RequestContext(request))
     else:
         form = ProfileForm()
     args = {}
