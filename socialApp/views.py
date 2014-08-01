@@ -124,6 +124,15 @@ def follow(request,offset):
     else:
         p.follower_set.create(followed=p2,followers=p)  
     return HttpResponseRedirect('/my_profile/followers_followings')
+    
+@login_required(login_url='/login/')
+def unfollow(request,offset):
+    a_user=User.objects.get(id=request.user.pk)
+    p=a_user.profile
+    p2=Profile.objects.get(pk=offset)
+    Follower.objects.filter(Q(followed=p2, followers=p)).delete()
+        
+    return HttpResponseRedirect('/my_profile/followers_followings')    
 
 @login_required(login_url='/login/')
 def follow_list(request):
