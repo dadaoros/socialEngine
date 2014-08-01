@@ -1,20 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="row">
-<div class="col-sm-8">
+<div class="col-sm-8">    
     <ul class="list-group">
     {% for profile in profile_list %}
         <li class="list-group-item">
-            <a href={{profile.pk}}>
-                <div class="row">
-                    <div class="col-sm-1 thumbnail">
-                        <img src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-64.png" alt="{{profile.firstName}} profile picture">
-                    </div>
-                    <div class="col-sm-11">
-                        {{profile.firstName}} {{profile.lastName}}
-                    </div>
+            <div class="row">
+                <a href={{profile.pk}}>
+                <div class="col-sm-1 thumbnail">
+                    <img src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-64.png" alt="{{profile.firstName}} profile picture">
                 </div>
-            </a>
+                </a>
+                <div class="col-sm-9">
+                    {{profile.followers.firstName}} {{profile.followers.lastName}}
+                </div>
+                <div class="col-sm-2">
+                    <a href="{{profile.followers.id}}">
+                    <button type="button" class="btn btn-success">Follow</button>
+                    </a>
+                </div>
+            </div>
         </li>
     {% endfor%}
     </ul>

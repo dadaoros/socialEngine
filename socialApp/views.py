@@ -8,7 +8,7 @@ from django.core.context_processors import csrf
 from django.contrib.auth.forms import UserCreationForm
 from socialEngine.forms import ProfileForm, PubForm
 from django.contrib.auth.models import User
-from socialApp.models import Pub, Profile
+from socialApp.models import Pub, Profile, Follower
 from django.template import loader, Context, RequestContext
 
 @login_required(login_url='/login/')
@@ -107,7 +107,9 @@ def post_in_wall(request):
 
 @login_required(login_url='/login/')
 def show_profiles(request):
-    profile_list=Profile.objects.all()
+    a_user=User.objects.get(id=request.user.pk)
+    p=a_user.profile
+    profile_list=Follower.objects.exclude(followers=2).distinct('followers')
     template = loader.get_template("profile_list.html")
     context = RequestContext(request,{'profile_list':profile_list})
     return HttpResponse({template.render(context)})
