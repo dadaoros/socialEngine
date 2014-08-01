@@ -2,6 +2,7 @@
 {% block content %}
     <h2>{{my_profile.profile.firstName}} {{my_profile.profile.lastName}}</h2>
     <h5>{{my_profile.profile}}</h5>
+    <a href='/my_profile/followers_followings/'>Followers - Followings</a>
     <form action="/profile/posted_in_wall/" method="post"> 
         {% csrf_token %}
         <textarea rows="4" cols="50" name="pub_text" id="pub_text" placeholder="Write here whatever you want to post in your wall" required></textarea>
