@@ -1,6 +1,7 @@
-{% extends "base.html" %}
+{% extends "logged_base.html" %}
 
 {% block content %}
+    <h3>My Wall</h3>
     <ul>
     {% for pub in wall_pubs %}
         <li>

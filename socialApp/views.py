@@ -11,11 +11,19 @@ from socialApp.models import Pub, Profile
 from django.template import loader, Context
 from django.contrib.auth.models import Permission, User
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import AnonymousUser
 
 
 @login_required(login_url='/login/')
 def home(request):
     return render_to_response('home.html')
+
+def my_profile(request):
+    p=Profile.objects.get(id=request.user.pk)
+    wall_pubs=p.pub_set.all()
+    template = loader.get_template("my_profile.html")
+    context = Context({"my_profile":{'profile': p ,'wall_pubs': wall_pubs}})
+    return HttpResponse({template.render(context)})
 
 def log_in(request):
     c = {}
@@ -73,12 +81,9 @@ def register_user(request):
     
     return render_to_response('register.html',args)
 
+
 @login_required(login_url='/login/')
 def wall(request,offset):
-    print offset
-    if request.user.pk==offset:
-        print request.user.pk
-    
     try:
         offset = int(offset)
     except ValueError:

@@ -4,18 +4,19 @@
     <title>{% block title %}Social Engine{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load staticfiles %}
-    <link rel="stylesheet" type="text/css" href='{{STATIC_URL}}css/bootstrap.css'>
+    <link rel="stylesheet" type="text/css" href='static/css/bootstrap.css'>
     
     
 </head>
 
 <body>
-    <div id="sidebar" class="jumbotron">
+    <div id="sidebar">
         {% block sidebar %}
         <ul>
             <li><a href="/">Home</a></li>
+            <li><a href="/register/">Sign in</a></li>   
             <li><a href="/profile">Find People</a></li>
-            <li><a href="/logout">Logout</a></li>
+            <li><a href="/logout">Logout</a></li>         
         </ul>
         {% endblock %}
     </div>

@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+
 {% block content %}
     {% if form.errors %}
         <p class="error">Sorry. that is not a valid username or password</p>
@@ -12,5 +14,5 @@
         
         <input type="submit" value="login" />
     </form>
-    <a href="/register/">registrarse</a>
+    
 {% endblock %}
