@@ -3,9 +3,9 @@
   <div class="col-sm-4"></div>
     <div class="col-sm-4">
       {% block content %}
-        <h3>My Wall</h3>            
+        <h3>{{my_wall.name}} {{my_wall.lname}} Wall</h3>            
           <ul class="list-group">
-            {% for pub in wall_pubs %}
+            {% for pub in my_wall.wall_pubs %}
               <li class="list-group-item">
                 <h5>Posted at {{pub.pub_date}}</h3>
                 <h4>{{pub.pub_text}}</h3>

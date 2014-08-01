@@ -94,7 +94,7 @@ def wall(request,offset):
     p=Profile.objects.get(id=offset)
     wall_pubs=p.pub_set.all()
     template = loader.get_template("wall.html")
-    context = RequestContext(request,{'wall_pubs':wall_pubs})
+    context = RequestContext(request,{'my_wall':{'name':p.firstName,'lname':p.lastName,'wall_pubs':wall_pubs}})
     return HttpResponse({template.render(context)})
     
 def post_in_wall(request):
@@ -112,4 +112,22 @@ def show_profiles(request):
     profile_list=Follower.objects.exclude(followers=2).distinct('followers')
     template = loader.get_template("profile_list.html")
     context = RequestContext(request,{'profile_list':profile_list})
+    return HttpResponse({template.render(context)})    
+
+@login_required(login_url='/login/')
+def follow(request,offset):
+    a_user=User.objects.get(id=request.user.pk)
+    p=a_user.profile
+    p2=Profile.objects.get(pk=offset)
+    p.follower_set.create(followed=p2,followers=p)  
+    return HttpResponseRedirect('/my_profile/followers_followings')
+
+@login_required(login_url='/login/')
+def follow_list(request):
+    a_user=User.objects.get(id=request.user.pk)
+    p=a_user.profile
+    fwng=Follower.objects.filter(followed=p)
+    fwer=Follower.objects.filter(followers=p)
+    template = loader.get_template("follower-following.html")
+    context = RequestContext(request,{'follows':{'fwng':fwng,'fwer':fwer}})
     return HttpResponse({template.render(context)})
