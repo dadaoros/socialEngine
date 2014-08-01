@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>{{my_profile.profile.firstName}} {{my_profile.profile.firstName}}</h2>
+    <h5>{{my_profile.profile}}</h5>
+    <form action="/profile/posted_in_wall/" method="post"> 
+        {% csrf_token %}
+        <textarea rows="4" cols="50" name="pub_text" id="pub_text" placeholder="Write here whatever you want to post in your wall" required></textarea>
+        <input type="submit" value="new_post" /> 
+    </form>
+    <ul>
+    {% for pub in my_profile.wall_pubs %}
+        <li>
+            <h5>Posted at {{pub.pub_date}}</h3>
+            <h4>{{pub.pub_text}}</h3>
+        </li>
+    {% endfor%}
+    </ul>
+{% endblock %}

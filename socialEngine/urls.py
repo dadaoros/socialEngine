@@ -1,6 +1,9 @@
 from django.conf.urls import patterns, include, url
-
+from django.conf import settings
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.contrib.staticfiles import views
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -17,5 +20,9 @@ urlpatterns = patterns('',
     url(r'^register_success/$', 'socialApp.views.register_success'),
     url(r'^profile/(\d{1,5})/$', 'socialApp.views.wall'),
     url(r'^profile/$', 'socialApp.views.show_profiles'),
-
+    url(r'my_profile', 'socialApp.views.my_profile'),
+    url(r'^profile/posted_in_wall/$', 'socialApp.views.post_in_wall'),
+    # Media
 )
+
+

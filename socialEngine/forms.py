@@ -7,4 +7,8 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('email', 'firstName', 'lastName', 'birth_date', 'sex')
+        
+class PubForm(forms.ModelForm):
+    pub_text = forms.CharField(label='Your wall post', max_length=400)
+
 

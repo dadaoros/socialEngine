@@ -1,2 +1,12 @@
 {% extends "base.html" %}
-hola :D
+{% block content %}
+<h3>{{my_profile.profile.firstname}}</h3>
+    <ul>
+    {% for pub in my_profile.wall_pubs %}
+        <li>
+            <h5>Posted at {{pub.pub_date}}</h3>
+            <h4>{{pub.pub_text}}</h3>
+        </li>
+    {% endfor%}
+    </ul>
+{% endblock %}
