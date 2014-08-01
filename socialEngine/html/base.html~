@@ -1,34 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<<<<<<< HEAD
-=======
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <!-- Optional theme -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">    
->>>>>>> 2f766ab3a8f53a9c7e20c32d46a844f3bf196dad
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     <title>{% block title %}Social Engine{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load staticfiles %}
-    <link rel="stylesheet" type="text/css" href='static/css/bootstrap.css'>
-    
-    
 </head>
 
 <body>
-<<<<<<< HEAD
-    <div id="sidebar">
-        {% block sidebar %}
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/register/">Sign in</a></li>   
-            <li><a href="/profile">Find People</a></li>
-            <li><a href="/logout">Logout</a></li>         
-        </ul>
-        {% endblock %}
-    </div>
-=======
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
@@ -39,7 +19,6 @@
             <div class="navbar-header">
               <a class="navbar-brand" href="/">SocialEngine</a>
             </div>
->>>>>>> 2f766ab3a8f53a9c7e20c32d46a844f3bf196dad
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -79,3 +58,18 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+    Status
+    API
+    Training
+    Shop
+    Blog
+    About
+
+    © 2014 GitHub, Inc.
+    Terms
+    Privacy
+    Security
+    Contact
+
+

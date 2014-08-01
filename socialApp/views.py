@@ -7,11 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 from django.contrib.auth.forms import UserCreationForm
 from socialEngine.forms import ProfileForm
+from django.contrib.auth.models import User
 from socialApp.models import Pub, Profile
-from django.template import loader, Context
-from django.contrib.auth.models import Permission, User
-from django.shortcuts import get_object_or_404
-from django.contrib.auth.models import AnonymousUser
 from django.template import loader, Context, RequestContext
 
 @login_required(login_url='/login/')
@@ -74,6 +71,8 @@ def register_user(request):
     
     return render_to_response('register.html',args)
 
+
+
 @login_required(login_url='/login/')
 def my_profile(request):
     p=Profile.objects.get(id=request.user.pk)
@@ -93,6 +92,16 @@ def wall(request,offset):
     template = loader.get_template("wall.html")
     context = RequestContext(request,{'wall_pubs':wall_pubs})
     return HttpResponse({template.render(context)})
+    
+def post_in_wall(request):
+    if request.POST:
+        form=PubForm(request.POST)
+        if form.is_valid():
+            pub_text = form.cleaned_data['pub_text']
+    args = {}
+    args.update(csrf(request))
+    args['form'] = form    
+    return render_to_response('my_profile.html',args)
 
 @login_required(login_url='/login/')
 def show_profiles(request):

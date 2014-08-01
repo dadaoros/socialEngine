@@ -3,7 +3,6 @@
     <h2>{{my_profile.profile.firstName}} {{my_profile.profile.firstName}}</h2>
     <h5>{{my_profile.profile}}</h5>
     <form action="/profile/posted_in_wall/" method="post"> 
-        {% csrf_token %}
         <textarea rows="4" cols="50" placeholder="Write here whatever you want to post in your wall"></textarea>
         <input type="submit" value="new_post" /> 
     </form>
