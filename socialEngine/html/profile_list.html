@@ -1,9 +1,24 @@
 {% extends "base.html" %}
-
 {% block content %}
-    <ul>
+<div class="row">
+<div class="col-sm-8">
+    <ul class="list-group">
     {% for profile in profile_list %}
-        <h3><li><a href={{profile.pk}}>{{profile.firstName}}</a></li></h3>
+        <li class="list-group-item">
+            <a href={{profile.pk}}>
+                <div class="row">
+                    <div class="col-sm-1 thumbnail">
+                        <img src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-64.png" alt="{{profile.firstName}} profile picture">
+                    </div>
+                    <div class="col-sm-11">
+                        {{profile.firstName}} {{profile.lastName}}
+                    </div>
+                </div>
+            </a>
+        </li>
     {% endfor%}
     </ul>
+</div>
+<div class="col-sm-4"></div>
+</div>
 {% endblock %}
