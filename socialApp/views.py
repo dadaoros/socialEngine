@@ -118,9 +118,7 @@ def follow(request,offset):
     p=a_user.profile
     p2=Profile.objects.get(pk=offset)
     p.follower_set.create(followed=p2,followers=p)  
-    #f=p.follower_set.all()
-    # unfollow Follower.objects.filter(followed=p2 && blablabla)
-    return HttpResponseRedirect('/profile_list/')
+    return HttpResponseRedirect('/my_profile/followers_followings')
 
 @login_required(login_url='/login/')
 def follow_list(request):
