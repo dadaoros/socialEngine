@@ -24,3 +24,5 @@ class Pub(models.Model):
 class Follower(models.Model):
     followed = models.ForeignKey(Profile, related_name='profile_followed')
     followers = models.ForeignKey(Profile)
+    def __unicode__(self):
+        return self.followed

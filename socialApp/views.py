@@ -63,16 +63,13 @@ def register_user(request):
                                   birth_date=request.POST.get('birth_date', ''),
                                   sex=request.POST.get('sex', ''))
             new_profile.save()
-            HttpResponseRedirect('/')
+            return HttpResponseRedirect('/')
         else:
             return render_to_response('error_login.html', context_instance=RequestContext(request))
     else:
-        form = ProfileForm()
-    args = {}
-    args.update(csrf(request))
-    args['form'] = form
-    
-    return render_to_response('register.html',args)
+        args = {}
+        args.update(csrf(request))
+        return render_to_response('register.html',args)
 
 
 
@@ -108,7 +105,9 @@ def post_in_wall(request):
 
 @login_required(login_url='/login/')
 def show_profiles(request):
-    profile_list=Profile.objects.all()
+    a_user=User.objects.get(id=request.user.pk)
+    p=a_user.profile
+    profile_list=Follower.objects.exclude(followers=p.id).distinct('followers')
     template = loader.get_template("profile_list.html")
     context = RequestContext(request,{'profile_list':profile_list})
     return HttpResponse({template.render(context)})    
