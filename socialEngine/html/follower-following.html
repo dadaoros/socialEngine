@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+FOLLOWERS
+<div class="col-sm-8">
+    <ul class="list-group">
+    {% for fwer in follows.fwer %}
+        <li class="list-group-item">
+            <a href='/profile/'{{fwer.followed.pk}}>
+                <div class="row">
+                    <div class="col-sm-1 thumbnail">
+                        <img src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-64.png" alt="{{fwer.followed.firstName}} profile picture">
+                    </div>
+                    <div class="col-sm-11">
+                        {{fwer.followed.firstName}} {{fwer.followed.lastName}}
+                    </div>
+                </div>
+            </a>
+        </li>
+    {% endfor%}
+    </ul>
+</div>
+<div class="col-sm-4"></div>
+</div>
+FOLLOWing
+
+<div class="col-sm-8">
+    <ul class="list-group">
+    {% for fwng in follows.fwng %}
+        <li class="list-group-item">
+            <a href={{fwng.followers.pk}}>
+                <div class="row">
+                    <div class="col-sm-1 thumbnail">
+                        <img src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-64.png" alt="{{fwng.followers.firstName}} profile picture">
+                    </div>
+                    <div class="col-sm-11">
+                        {{fwng.followers.firstName}} {{fwng.followers.lastName}}
+                    </div>
+                </div>
+            </a>
+        </li>
+    {% endfor%}
+    </ul>
+</div>
+
+{% endblock %}

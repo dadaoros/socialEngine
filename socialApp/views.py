@@ -120,5 +120,14 @@ def follow(request,offset):
     p.follower_set.create(followed=p2,followers=p)  
     #f=p.follower_set.all()
     # unfollow Follower.objects.filter(followed=p2 && blablabla)
-    return HttpResponseRedirect('/my_profile/')
+    return HttpResponseRedirect('/profile_list/')
 
+@login_required(login_url='/login/')
+def follow_list(request):
+    a_user=User.objects.get(id=request.user.pk)
+    p=a_user.profile
+    fwng=Follower.objects.filter(followed=p)
+    fwer=Follower.objects.filter(followers=p)
+    template = loader.get_template("follower-following.html")
+    context = RequestContext(request,{'follows':{'fwng':fwng,'fwer':fwer}})
+    return HttpResponse({template.render(context)})
