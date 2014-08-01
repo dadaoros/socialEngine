@@ -100,7 +100,7 @@ def post_in_wall(request):
         new_pub_text=request.POST.get('pub_text','')
         p=Profile.objects.get(id=request.user.pk)
         p.pub_set.create(pub_text=new_pub_text)
-    return HttpResponseRedirect('my_profile.html')
+    return HttpResponseRedirect('/my_profile/')
 
 @login_required(login_url='/login/')
 def show_profiles(request):
