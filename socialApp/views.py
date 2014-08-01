@@ -75,7 +75,8 @@ def register_user(request):
 
 @login_required(login_url='/login/')
 def my_profile(request):
-    p=Profile.objects.get(id=request.user.pk)
+    a_user=User.objects.get(id=request.user.pk)
+    p=a_user.profile
     wall_pubs=p.pub_set.all()
     template = loader.get_template("my_profile.html")
     context = {"my_profile":{'profile': p ,'wall_pubs': wall_pubs}}
@@ -91,7 +92,7 @@ def wall(request,offset):
     p=Profile.objects.get(id=offset)
     wall_pubs=p.pub_set.all()
     template = loader.get_template("wall.html")
-    context = RequestContext(request,{'wall_pubs':wall_pubs})
+    context = RequestContext(request,{'my_wall':{'name':p.firstName,'lname':p.lastName,'wall_pubs':wall_pubs}})
     return HttpResponse({template.render(context)})
     
 def post_in_wall(request):
