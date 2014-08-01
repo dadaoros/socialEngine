@@ -119,5 +119,6 @@ def follow(request,offset):
     p2=Profile.objects.get(pk=offset)
     p.follower_set.create(followed=p2,followers=p)  
     #f=p.follower_set.all()
+    # unfollow Follower.objects.filter(followed=p2 && blablabla)
     return HttpResponseRedirect('/my_profile/')
 
