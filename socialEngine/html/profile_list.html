@@ -6,7 +6,7 @@
     {% for profile in profile_list %}
         <li class="list-group-item">
             <div class="row">
-                <a href={{profile.pk}}>
+                <a href="{{profile.followers.id}}">
                 <div class="col-sm-1 thumbnail">
                     <img src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-64.png" alt="{{profile.firstName}} profile picture">
                 </div>
@@ -15,7 +15,7 @@
                     {{profile.followers.firstName}} {{profile.followers.lastName}}
                 </div>
                 <div class="col-sm-2">
-                    <a href="{{profile.followers.id}}">
+                    <a href="/follow/{{profile.pk}}">
                     <button type="button" class="btn btn-success">Follow</button>
                     </a>
                 </div>
