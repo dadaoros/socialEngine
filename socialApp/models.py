@@ -12,17 +12,17 @@ class Profile(models.Model):
     sex = models.CharField(max_length=1)
     password = models.CharField(max_length=30)
     def __unicode__(self):
-        return self.email
+        return unicode(self.email)
  
 class Pub(models.Model):
     profile = models.ForeignKey(Profile)
     pub_text = models.CharField(max_length=350)
     pub_date = models.DateTimeField(auto_now=True, null=True)
     def __unicode__(self):
-        return self.pub_text
+        return unicode(self.pub_text)
 
 class Follower(models.Model):
     followed = models.ForeignKey(Profile, related_name='profile_followed')
     followers = models.ForeignKey(Profile)
     def __unicode__(self):
-        return self.followed
+        return unicode(self.followed)
