@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+<div class="row">
+  <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+      {% block content %}
+            <ul class="list-group">
+            {% for fb in f %}
+              <li class="list-group-item">
+                <h5>Posted at {{fb.pk}}</h3>
+              </li>
+            {% endfor%}
+            </ul>
+        {% endblock %}
+    </div>
+  <div class="col-sm-4"></div>
+</div>
