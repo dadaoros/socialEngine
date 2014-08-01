@@ -4,7 +4,7 @@
     <h5>{{my_profile.profile}}</h5>
     <form action="/profile/posted_in_wall/" method="post"> 
         {% csrf_token %}
-        <textarea rows="4" cols="50" placeholder="Write here whatever you want to post in your wall"></textarea>
+        <textarea rows="4" cols="50" name="pub_text" id="pub_text" placeholder="Write here whatever you want to post in your wall" required></textarea>
         <input type="submit" value="new_post" /> 
     </form>
     <ul>

@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 from django.contrib.auth.forms import UserCreationForm
-from socialEngine.forms import ProfileForm
+from socialEngine.forms import ProfileForm, PubForm
 from django.contrib.auth.models import User
 from socialApp.models import Pub, Profile
 from django.template import loader, Context, RequestContext
@@ -71,6 +71,17 @@ def register_user(request):
     
     return render_to_response('register.html',args)
 
+
+
+@login_required(login_url='/login/')
+def my_profile(request):
+    p=Profile.objects.get(id=request.user.pk)
+    wall_pubs=p.pub_set.all()
+    template = loader.get_template("my_profile.html")
+    context = {"my_profile":{'profile': p ,'wall_pubs': wall_pubs}}
+    context.update(csrf(request))
+    return render_to_response('my_profile.html',context)  
+   
 @login_required(login_url='/login/')
 def wall(request,offset):
     try:
@@ -82,6 +93,13 @@ def wall(request,offset):
     template = loader.get_template("wall.html")
     context = RequestContext(request,{'wall_pubs':wall_pubs})
     return HttpResponse({template.render(context)})
+    
+def post_in_wall(request):
+    if request.POST:
+        new_pub_text=request.POST.get('pub_text','')
+        p=Profile.objects.get(id=request.user.pk)
+        p.pub_set.create(pub_text=new_pub_text)
+    return HttpResponseRedirect('my_profile.html')
 
 @login_required(login_url='/login/')
 def show_profiles(request):
@@ -89,13 +107,3 @@ def show_profiles(request):
     template = loader.get_template("profile_list.html")
     context = RequestContext(request,{'profile_list':profile_list})
     return HttpResponse({template.render(context)})
-def post_in_wall(request):
-    if request.POST:
-        form=PubForm(request.POST)
-        if form.is_valid():
-            pub_text = form.cleaned_data['pub_text']
-    args = {}
-    args.update(csrf(request))
-    args['form'] = form    
-    return render_to_response('my_profile.html',args)
-
