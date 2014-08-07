@@ -15,8 +15,13 @@
                     {{profile.followers.firstName}} {{profile.followers.lastName}}
                 </div>
                 <div class="col-sm-2">
-                    <a href="/follow/{{profile.followers.id}}">
+				{% if profile.id == 0 %}
+					<a href="/unfollow/{{profile.followers.id}}">
+                    <button type="button" class="btn btn-danger">Unfollow</button>
+                {% else %}
+                	<a href="/follow/{{profile.followers.id}}">
                     <button type="button" class="btn btn-success">Follow</button>
+				{% endif %}
                     </a>
                 </div>
             </div>
