@@ -63,6 +63,7 @@ def register_user(request):
                                   birth_date=request.POST.get('birth_date', ''),
                                   sex=request.POST.get('sex', ''))
             new_profile.save()
+            follow_itself = Follower.objects.create(followed=new_profile,followers=new_profile)
             return HttpResponseRedirect('/')
         else:
             return render_to_response('error_login.html', context_instance=RequestContext(request))
