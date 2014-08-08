@@ -156,8 +156,8 @@ def unfollow(request,offset):
 def follow_list(request):
     a_user=User.objects.select_related().get(id=request.user.pk)
     p=a_user.profile #doesn't hit the database
-    fwng=Follower.objects.filter(followed=p)
-    fwer=Follower.objects.filter(followers=p)
+    fwng=Follower.objects.filter(followed=p).exclude(followers=p)
+    fwer=Follower.objects.filter(followers=p).exclude(followed=p)
     template = loader.get_template("follower-following.html")
     context = RequestContext(request,{'follows':{'fwng':fwng,'fwer':fwer}})
     return HttpResponse({template.render(context)})
