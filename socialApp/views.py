@@ -23,7 +23,7 @@ def home(request):
         pubs_in_Pro=pro.pub_set.select_related().all()
         for pu in pubs_in_Pro:
             pubs.append(pu)
-    pubs=sorted(pubs,key=lambda Pub: Pub.pub_text, reverse=True)
+    pubs=sorted(pubs,key=lambda Pub: Pub.pub_date, reverse=True)
      
     template = loader.get_template("home.html")
     context = RequestContext(request,{'pubs':pubs})
