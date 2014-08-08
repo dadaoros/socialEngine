@@ -20,7 +20,7 @@ class Pub(models.Model):
     pub_text = models.CharField(max_length=350)
     pub_date = models.DateTimeField(auto_now=True, null=True)
     def __unicode__(self):
-        return unicode(self.pub_date)
+        return unicode(self.pub_date.total_seconds())
    
 class Follower(models.Model):
     followed = models.ForeignKey(Profile, related_name='profile_followed')
