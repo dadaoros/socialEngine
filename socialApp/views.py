@@ -14,8 +14,21 @@ from django.db.models import Q
 
 @login_required(login_url='/login/')
 def home(request):
-    return render_to_response('home.html', context_instance=RequestContext(request))
-
+    a_user=User.objects.select_related().get(id=request.user.pk)
+    p=a_user.profile#doesn't hit the database
+    fw=p.follower_set.filter(followers=p)
+    pubs = [] 
+    for f in fw:
+        pro=f.followed
+        pubs_in_Pro=pro.pub_set.select_related().all()
+        for pu in pubs_in_Pro:
+            pubs.append(pu)
+    pubs=sorted(pubs,key=lambda Pub: Pub.pub_text, reverse=True)
+     
+    template = loader.get_template("home.html")
+    context = RequestContext(request,{'pubs':pubs})
+    return HttpResponse({template.render(context)})
+    
 def log_in(request):
     c = {}
     c.update(csrf(request))
@@ -75,7 +88,7 @@ def register_user(request):
 
 @login_required(login_url='/login/')
 def my_profile(request):
-    a_user=User.objects.get(id=request.user.pk)
+    a_user=User.objects.select_related().get(id=request.user.pk)
     p=a_user.profile
     wall_pubs=p.pub_set.all()
     template = loader.get_template("my_profile.html")
@@ -98,14 +111,14 @@ def wall(request,offset):
 def post_in_wall(request):
     if request.POST:
         new_pub_text=request.POST.get('pub_text','')
-        a_user=User.objects.get(id=request.user.pk)
+        a_user=User.objects.select_related().get(id=request.user.pk)
         p=a_user.profile
         p.pub_set.create(pub_text=new_pub_text)
     return HttpResponseRedirect('/my_profile/')
 
 @login_required(login_url='/login/')
 def show_profiles(request):
-    a_user=User.objects.get(id=request.user.pk)
+    a_user=User.objects.select_related().get(id=request.user.pk)
     p=a_user.profile
     profile_list=Follower.objects.exclude(followers=p.id).distinct('followers')
     template = loader.get_template("profile_list.html")
@@ -114,7 +127,7 @@ def show_profiles(request):
 
 @login_required(login_url='/login/')
 def follow(request,offset):
-    a_user=User.objects.get(id=request.user.pk)
+    a_user=User.objects.select_related().get(id=request.user.pk)
     p=a_user.profile
     p2=Profile.objects.get(pk=offset)
     #filtro=p.follower_set.get(followed=p2)
@@ -127,8 +140,8 @@ def follow(request,offset):
     
 @login_required(login_url='/login/')
 def unfollow(request,offset):
-    a_user=User.objects.get(id=request.user.pk)
-    p=a_user.profile
+    a_user=User.objects.select_related().get(id=request.user.pk)
+    p=a_user.profile#doesn't hit the database
     p2=Profile.objects.get(pk=offset)
     Follower.objects.filter(Q(followed=p2, followers=p)).delete()
         
@@ -136,10 +149,17 @@ def unfollow(request,offset):
 
 @login_required(login_url='/login/')
 def follow_list(request):
-    a_user=User.objects.get(id=request.user.pk)
-    p=a_user.profile
+    a_user=User.objects.select_related().get(id=request.user.pk)
+    p=a_user.profile #doesn't hit the database
     fwng=Follower.objects.filter(followed=p)
     fwer=Follower.objects.filter(followers=p)
     template = loader.get_template("follower-following.html")
     context = RequestContext(request,{'follows':{'fwng':fwng,'fwer':fwer}})
     return HttpResponse({template.render(context)})
+    
+
+    
+    
+    
+    
+    
