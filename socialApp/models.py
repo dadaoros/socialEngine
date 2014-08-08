@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import datetime
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User)
     email = models.EmailField()
@@ -13,14 +14,14 @@ class Profile(models.Model):
     password = models.CharField(max_length=30)
     def __unicode__(self):
         return unicode(self.email)
- 
+
 class Pub(models.Model):
     profile = models.ForeignKey(Profile)
     pub_text = models.CharField(max_length=350)
     pub_date = models.DateTimeField(auto_now=True, null=True)
     def __unicode__(self):
-        return unicode(self.pub_text)
-
+        return unicode(self.pub_date)
+   
 class Follower(models.Model):
     followed = models.ForeignKey(Profile, related_name='profile_followed')
     followers = models.ForeignKey(Profile)

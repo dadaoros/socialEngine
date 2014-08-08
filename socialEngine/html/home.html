@@ -1,4 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
-hola :D
+<div class="row">
+<div class="col-sm-8">
+    <ul class="list-group">
+    {% for pub in pubs %}
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-sm-11">
+                    <h6>Posted at {{pub.pub_date}}<h6>
+                    <h3>{{pub.profile.firstName}} {{pub.profile.lastName}} Published:</h3>
+                    <h4>{{pub.pub_text}}</h4> 
+                </div>
+            </div>
+        </li>
+    {% endfor%}
+    </ul>
+</div>
+<div class="col-sm-4"></div>
+</div>
 {% endblock %}
