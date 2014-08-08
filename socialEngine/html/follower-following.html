@@ -6,7 +6,7 @@ FOLLOWING
     <ul class="list-group">
     {% for fwer in follows.fwer %}
         <li class="list-group-item">
-            <a href='/profile/'{{fwer.followed.pk}}>
+            <a href='/profile/{{fwer.followed.pk}}'>
                 <div class="row">
                     <div class="col-sm-1 thumbnail">
                         <img src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-64.png" alt="{{fwer.followed.firstName}} profile picture">
@@ -28,7 +28,7 @@ FOLLOWERS
     <ul class="list-group">
     {% for fwng in follows.fwng %}
         <li class="list-group-item">
-            <a href={{fwng.followers.pk}}>
+            <a href='/profile/{{fwng.followers.pk}}'>
                 <div class="row">
                     <div class="col-sm-1 thumbnail">
                         <img src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-64.png" alt="{{fwng.followers.firstName}} profile picture">

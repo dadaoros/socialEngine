@@ -23,7 +23,7 @@ def home(request):
         pubs_in_Pro=pro.pub_set.select_related().all()
         for pu in pubs_in_Pro:
             pubs.append(pu)
-    pubs=sorted(pubs,key=lambda Pub: Pub.pub_text, reverse=True)
+    pubs=sorted(pubs,key=lambda Pub: Pub.pub_date, reverse=True)
      
     template = loader.get_template("home.html")
     context = RequestContext(request,{'pubs':pubs})
@@ -76,6 +76,7 @@ def register_user(request):
                                   birth_date=request.POST.get('birth_date', ''),
                                   sex=request.POST.get('sex', ''))
             new_profile.save()
+            follow_itself = Follower.objects.create(followed=new_profile,followers=new_profile)
             return HttpResponseRedirect('/')
         else:
             return render_to_response('error_login.html', context_instance=RequestContext(request))
@@ -121,8 +122,13 @@ def show_profiles(request):
     a_user=User.objects.select_related().get(id=request.user.pk)
     p=a_user.profile
     profile_list=Follower.objects.exclude(followers=p.id).distinct('followers')
+    friends=p.follower_set.all()
+    for p in profile_list:
+			for f in friends:
+				if(p.followers.email == f.followed.email):
+					p.id=0
     template = loader.get_template("profile_list.html")
-    context = RequestContext(request,{'profile_list':profile_list})
+    context = RequestContext(request,{'profile_list':profile_list,'friends':friends})
     return HttpResponse({template.render(context)})    
 
 @login_required(login_url='/login/')
@@ -130,13 +136,12 @@ def follow(request,offset):
     a_user=User.objects.select_related().get(id=request.user.pk)
     p=a_user.profile
     p2=Profile.objects.get(pk=offset)
-    #filtro=p.follower_set.get(followed=p2)
     filtro=Follower.objects.filter(Q(followed=p2, followers=p))
     if filtro:
         print "be happy"
     else:
         p.follower_set.create(followed=p2,followers=p)  
-    return HttpResponseRedirect('/my_profile/followers_followings')
+    return HttpResponseRedirect('/profile/')  
     
 @login_required(login_url='/login/')
 def unfollow(request,offset):
@@ -145,7 +150,7 @@ def unfollow(request,offset):
     p2=Profile.objects.get(pk=offset)
     Follower.objects.filter(Q(followed=p2, followers=p)).delete()
         
-    return HttpResponseRedirect('/my_profile/followers_followings')    
+    return HttpResponseRedirect('/profile/')    
 
 @login_required(login_url='/login/')
 def follow_list(request):
