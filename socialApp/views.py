@@ -161,10 +161,21 @@ def follow_list(request):
     template = loader.get_template("follower-following.html")
     context = RequestContext(request,{'follows':{'fwng':fwng,'fwer':fwer}})
     return HttpResponse({template.render(context)})
-    
 
-    
-    
-    
-    
-    
+@login_required(login_url='/login/')
+def show_personal_data(request):
+    p=Profile.objects.get(user=request.user.id)
+    return render(request,'edit_personal_data.html',{'profile':p})
+
+@login_required(login_url='/login/')
+def edit_personal_data(request):
+    if request.method == 'POST':
+        p=Profile.objects.get(user=request.user.id)
+        p.firstName=request.POST.get('fname')
+        p.lastName=request.POST.get('lname')
+        p.birth_date=request.POST.get('bdate')
+        p.sex=request.POST.get('sex')
+        p.save()
+        return render(request,'edit_personal_data_success.html')
+    else:
+        return render(request,'home.html')

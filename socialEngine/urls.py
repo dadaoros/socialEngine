@@ -24,6 +24,8 @@ urlpatterns = patterns('',
     url(r'^follow/(\d{1,5})/$', 'socialApp.views.follow'),
     url(r'^unfollow/(\d{1,5})/$', 'socialApp.views.unfollow'),
     url(r'^profile/posted_in_wall/$', 'socialApp.views.post_in_wall'),
+    url(r'^profile/edit/$', 'socialApp.views.show_personal_data'),
+    url(r'^edit-profile/$', 'socialApp.views.edit_personal_data'),
     url(r'^my_profile/followers_followings/$', 'socialApp.views.follow_list'),
     # Media
 )
