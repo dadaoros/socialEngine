@@ -1,9 +1,34 @@
-{% extends "logged_base.html" %}
-
+{% extends "base.html" %}
 {% block content %}
-    <ul>
+<div class="row">
+<div class="col-sm-8">    
+    <ul class="list-group">
     {% for profile in profile_list %}
-        <h3><li><a href={{profile.pk}}>{{profile.firstName}}</a></li></h3>
+        <li class="list-group-item">
+            <div class="row">
+                <a href="{{profile.followers.id}}">
+                <div class="col-sm-1 thumbnail">
+                    <img src="{{STATIC_URL}}avatar/{{profile.profile_picture}}" alt="{{profile.firstName}} profile picture">
+                </div>
+                </a>
+                <div class="col-sm-9">
+                    {{profile.followers.firstName}} {{profile.followers.lastName}}
+                </div>
+                <div class="col-sm-2">
+				{% if profile.id == 0 %}
+					<a href="/unfollow/{{profile.followers.id}}">
+                    <button type="button" class="btn btn-danger">Unfollow</button>
+                {% else %}
+                	<a href="/follow/{{profile.followers.id}}">
+                    <button type="button" class="btn btn-success">Follow</button>
+				{% endif %}
+                    </a>
+                </div>
+            </div>
+        </li>
     {% endfor%}
     </ul>
+</div>
+<div class="col-sm-4"></div>
+</div>
 {% endblock %}

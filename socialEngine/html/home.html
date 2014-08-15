@@ -7,9 +7,16 @@
         <li class="list-group-item">
             <div class="row">
                 <div class="col-sm-11">
-                    <h6>Posted at {{pub.pub_date}}<h6>
-                    <h3>{{pub.profile.firstName}} {{pub.profile.lastName}} Published:</h3>
-                    <h4>{{pub.pub_text}}</h4> 
+                    <ul id="navlist">
+                        <li><img src="{{STATIC_URL}}avatar/{{pub.profile.profile_picture}}" alt="{{pub.profile.firstName}} profile picture"></li>
+                        <li>
+                            <div>
+                                <h6>Posted at {{pub.pub_date}}<h6>
+                                <h3>{{pub.profile.firstName}} {{pub.profile.lastName}} Published:</h3>
+                                <h4>{{pub.pub_text}}</h4> 
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </li>
