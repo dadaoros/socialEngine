@@ -11,6 +11,8 @@ from django.contrib.auth.models import User
 from socialApp.models import Pub, Profile, Follower
 from django.template import loader, Context, RequestContext
 from django.db.models import Q
+from socialEngine.settings import AVATAR_URL
+import os
 
 @login_required(login_url='/login/')
 def home(request):
@@ -107,7 +109,7 @@ def wall(request,offset):
     wall_pubs=p.pub_set.all()
     template = loader.get_template("wall.html")
     context = RequestContext(request)
-    return render_to_response('wall.html',{'my_wall':{'name':p.firstName,'lname':p.lastName,'wall_pubs':wall_pubs}},context)  
+    return render_to_response('wall.html',{'my_wall':{'picture': p.profile_picture,'name':p.firstName,'lname':p.lastName,'wall_pubs':wall_pubs}},context)  
     
 def post_in_wall(request):
     if request.POST:
@@ -175,6 +177,7 @@ def edit_personal_data(request):
         p.lastName=request.POST.get('lname')
         p.birth_date=request.POST.get('bdate')
         p.sex=request.POST.get('sex')
+        p.profile_picture=request.POST.get('avatar')
         p.save()
         return render(request,'edit_personal_data_success.html')
     else:
