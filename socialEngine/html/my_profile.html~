@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-    <h2>{{my_profile.profile.firstName}} {{my_profile.profile.lastName}}</h2>
+    <h2><img src="{{STATIC_URL}}avatar/my_profile.profile.profile_picture" alt="{{my_profile.profile.firstName}} profile picture">{{my_profile.profile.firstName}} {{my_profile.profile.lastName}}</h2>
     <h5>{{my_profile.profile}}</h5>
-    <a href='/my_profile/followers_followings/'>Followers - Followings</a>
+    <h4><a href='/my_profile/followers_followings/'>Followers - Followings</a></h4>
     <form action="/profile/posted_in_wall/" method="post"> 
         {% csrf_token %}
         <textarea rows="4" cols="50" name="pub_text" id="pub_text" placeholder="Write here whatever you want to post in your wall" required></textarea>
