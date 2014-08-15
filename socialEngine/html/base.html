@@ -28,7 +28,7 @@
                 {% if user.is_authenticated %}
                     <li>
                         <a class="" href="/my_profile">
-                            <img src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-24.png" alt="{{profile.firstName}} profile picture">
+                            <img src="{{STATIC_URL}}avatar/{{user.profile.profile_picture}}" alt="{{user.profile.firstName}} profile picture" width=40px height=40px>
                         </a>
                     </li>
                     <li>
