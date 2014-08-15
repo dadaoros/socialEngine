@@ -12,6 +12,7 @@ class Profile(models.Model):
     birth_date = models.DateField()
     sex = models.CharField(max_length=1)
     password = models.CharField(max_length=30)
+    profile_picture = models.FilePathField(path='/static/avatar/',match=r'\.jpg$', recursive=False, default="f1")
     def __unicode__(self):
         return unicode(self.email)
 
@@ -27,3 +28,5 @@ class Follower(models.Model):
     followers = models.ForeignKey(Profile)
     def __unicode__(self):
         return unicode(self.followed)
+        
+

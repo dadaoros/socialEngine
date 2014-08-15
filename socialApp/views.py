@@ -106,8 +106,8 @@ def wall(request,offset):
     p=Profile.objects.get(id=offset)
     wall_pubs=p.pub_set.all()
     template = loader.get_template("wall.html")
-    context = RequestContext(request,{'my_wall':{'name':p.firstName,'lname':p.lastName,'wall_pubs':wall_pubs}})
-    return HttpResponse({template.render(context)})
+    context = RequestContext(request)
+    return render_to_response('wall.html',{'my_wall':{'name':p.firstName,'lname':p.lastName,'wall_pubs':wall_pubs}},context)  
     
 def post_in_wall(request):
     if request.POST:

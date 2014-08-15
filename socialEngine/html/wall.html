@@ -3,7 +3,8 @@
   <div class="col-sm-4"></div>
     <div class="col-sm-4">
       {% block content %}
-        <h3>{{my_wall.name}} {{my_wall.lname}} Wall</h3>            
+        <h3><img src="{{STATIC_URL}}avatar/f1.jpg" alt="{{profile.firstName}} profile picture">
+        {{my_wall.name}} {{my_wall.lname}} Wall</h3>            
           <ul class="list-group">
             {% for pub in my_wall.wall_pubs %}
               <li class="list-group-item">
