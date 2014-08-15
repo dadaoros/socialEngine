@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-4">
+    </div>
+    <div class="col-sm-4">
+         <form name="form" method="post" action="/edit-profile/">{% csrf_token %}
+            <div class="form-group">
+                <label for="id_fname">Fist Name</label>
+                <input type="text" class="form-control" name="fname" id="id_fname" placeholder="Your first name" value="{{profile.firstName}}">
+            </div>
+            <div class="form-group">
+                <label for="id_lname">Last Name</label>
+                <input type="text" class="form-control" name="lname" id="id_lname" placeholder="Your last name" value="{{profile.lastName}}">
+            </div>
+            <div class="form-group">
+                <label for="id_bdate">Birth Date</label>
+                <input type="date" class="form-control" name="bdate" id="id_bdate" placeholder="Your birth date" value="{{profile.birth_date|date:'Y-m-d'}}">
+            </div>
+            <div class="form-group">
+                <label for="id_sex">Sex:</label>
+                <select class="form-control" id="id_sex" name="sex">
+                  <option value="m">male</option>
+                  <option value="f">female</option>
+                </select>
+            </div>      
+            <div class="form-group">
+                <input type="radio" name="avatar" value="m1"> Milk
+                <input type="radio" name="avatar" value="m2"> Butter
+                <input type="radio" name="avatar" value="m3"> Cheese
+                <input type="radio" name="avatar" value="f1.jpg" checked> female
+                <input type="radio" name="avatar" value="f2.jpg"> female2
+                <input type="radio" name="avatar" value="f3"> Wine
+            </div>
+                      
+             
+            <button type="submit" class="btn btn-primary">Send</button>
+            
+          </form>
+    </div>
+    <div class="col-sm-4"></div>
+</div>
+{% endblock %}
